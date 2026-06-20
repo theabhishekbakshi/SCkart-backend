@@ -73,12 +73,12 @@ export const getAllProducts = TryCatch(async(req, res)=>{
 export const getSingleProduct = TryCatch(async(req, res)=>{
   const product = await Product.findById(req.params.id)
 
-  const relatedProducts = await Product.find({
+  const relatedProduct = await Product.find({
     category: product.category,
     _id: {$ne: product._id}
   }).limit(4);
 
-  res.json({product, relatedProducts})
+  res.json({product, relatedProduct})
 })
 
 
