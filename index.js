@@ -15,11 +15,6 @@ cloudinary.v2.config({
     api_secret: process.env.CLOUD_API_SECRET
 })
 
-const app = express()
-const PORT = process.env.PORT || 3000
-app.use(express.json())
-app.use(cors());
-
 // importing routes
 import userRoutes from './routes/user.route.js'
 import productRoutes from './routes/product.route.js'
@@ -27,8 +22,10 @@ import cartRoutes from './routes/cart.route.js'
 import addressRoutes from './routes/address.route.js'
 import orderRoutes from './routes/order.route.js'
 
-
-
+const app = express()
+const PORT = process.env.PORT || 3000
+app.use(express.json())
+app.use(cors());
 
 //using routes
 app.use("/api", userRoutes);
@@ -37,7 +34,14 @@ app.use("/api", cartRoutes);
 app.use("/api", addressRoutes);
 app.use("/api", orderRoutes);
 
-app.listen(PORT, ()=>{
-    console.log(`server is running on http://localhost:${PORT}`)
-    connectDb()
-})
+connectDb()
+
+export default app
+
+// Only run the HTTP server locally. On Vercel the app is exported as a
+// serverless function, so app.listen() must not be called there.
+if (!process.env.VERCEL) {
+    app.listen(PORT, () => {
+        console.log(`server is running on http://localhost:${PORT}`)
+    })
+}
