@@ -1,8 +1,11 @@
+import dns from 'node:dns'
 import express from 'express'
 import dotenv from 'dotenv'
 import connectDb from './utils/db.js'
 import cloudinary from 'cloudinary'
 import cors from "cors"
+
+dns.setServers(['8.8.8.8', '1.1.1.1'])
 
 dotenv.config()
 
