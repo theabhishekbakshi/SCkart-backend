@@ -34,6 +34,33 @@ app.use("/api", cartRoutes);
 app.use("/api", addressRoutes);
 app.use("/api", orderRoutes);
 
+const banner = [
+    "   _____  ____   ____    ____    _   ______  ______",
+    "  / ___/ / __ \\ / __ \\  / __ \\  / | / / __ \\/_  __/",
+    "  \\__ \\ / / / // / / / / / / / /  |/ / / / / / /   ",
+    " ___/ // /_/ // /_/ / / /_/ / / /|  / /_/ / / /    ",
+    "/____/ \\____/ \\____/  \\____/ /_/ |_/\\____/ /_/     ",
+].join("\n");
+
+app.get("/", (req, res) => {
+    res.status(200).json({
+        app: "SCkart",
+        tagline: "Shop Smart. Live Smarter.",
+        status: "running",
+        designer: "Welcome to the SCkart API",
+        banner,
+        routes: {
+            products: "/api/product/all",
+            product: "/api/product/:id",
+            login: "/api/user/login",
+            verify: "/api/user/verify",
+            cart: "/api/cart/all",
+            address: "/api/address/all",
+            orders: "/api/order/all",
+        },
+    });
+});
+
 connectDb()
 
 export default app
